@@ -2,5 +2,5 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "none"
+  "python.defaultInterpreterPath": "~/anaconda3/envs/kjpy/bin/python"
 }
