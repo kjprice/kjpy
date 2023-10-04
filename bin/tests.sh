@@ -3,4 +3,6 @@
 cd "$(dirname "$0")"
 cd ..
 
-nodemon -e py -x 'python -m unittest'
+pypath="$(which python)"
+
+nodemon -e py -x "$pypath -m unittest"
