@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional, Union, List
-from src.kjpy.collections.sequence_class import SequenceAbstract
-from src.kjpy.collections.mapping_class import MappingAbstract
+from kjpy.collections.sequence_class import SequenceAbstract
+from kjpy.collections.mapping_class import MappingAbstract
 
 _RAW_SERIALIZABLE_TYPES = set([int, float, str, bool])
 
