@@ -5,4 +5,4 @@ cd ..
 
 pypath="$(which python)"
 
-nodemon -e py -x "$pypath -m unittest"
+nodemon -e py -x "$pypath -m unittest  discover"
