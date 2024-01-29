@@ -20,10 +20,13 @@ src/kjpy/concurrent/worker_messages/mongo_message_abstract.py
 src/kjpy/concurrent/worker_messages/mongo_query.py
 src/kjpy/concurrent/worker_messages/mongo_update.py
 src/kjpy/concurrent/worker_messages/worker_stats.py
+src/kjpy/concurrent/worker_messages/worker_metadata_store/worker_metadata.py
+src/kjpy/concurrent/worker_messages/worker_metadata_store/worker_metadata_manager.py
 src/kjpy/data/data_handler.py
 src/kjpy/data/data_io_handler.py
 src/kjpy/data/misc.py
 src/kjpy/data/unit_test_handler.py
 src/kjpy/decorators/beautiful_soup_decorators.py
+src/kjpy/format/format_time.py
 tests/test_concurrent.py
 tests/test_mapping_class.py
