@@ -8,10 +8,7 @@ def _split_keys(item: str) -> List[str]:
 
 
 class CustomHandler(Enum):
-    PERSON = "is_person_field"
-    PUBLISHER = "is_publisher_field"
-    VARIATIONS = "is_variations_field"
-    VARIATION_OF = "is_variation_of_field"
+    pass
 
 
 class JsonObjectMapper:
