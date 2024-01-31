@@ -6,8 +6,11 @@ DAY = HOUR * 24
 
 def format_time(seconds: float, show_trailing_ms=False) -> str:
     if seconds < SECOND:
-        ms = int(seconds * 1000)
-        return f"{ms}ms"
+        if show_trailing_ms:
+            ms = int(round(seconds * 1000, 0))
+            return f"{ms}ms"
+        else:
+            return ""
 
     if not show_trailing_ms:
         seconds = int(seconds)
