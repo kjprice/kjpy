@@ -1,7 +1,30 @@
 from datetime import datetime
+from typing import List
 import unittest
 
 from src.kjpy.transforms.transform_field_helpers import *
+
+
+class TestRecursiveCurrentObject(unittest.TestCase):
+    @property
+    def obj(self):
+        return {"Bob": {"Sara": True}}
+
+    def helper(self, items: List[str], expect_change=False):
+        obj = self.obj
+        new_obj = get_recursive_current_object(obj, items)
+        if expect_change:
+            self.assertNotEqual(obj, self.obj)
+        else:
+            self.assertEqual(obj, self.obj)
+
+        return new_obj
+
+    def test_get_recursive_current_object(self):
+        sara_obj = {"Sara": True}
+        self.assertEqual(self.helper(["Bob", "Sara"]), sara_obj)
+        self.assertEqual(self.helper(["Bob", "Tom"]), sara_obj)
+        self.assertEqual(self.helper(["Bob", "Tom", "Jerry"], True), {})
 
 
 class TestMongoFieldHelpers(unittest.TestCase):

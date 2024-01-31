@@ -1,3 +1,4 @@
+from typing import List
 from dateutil import parser
 import re
 
@@ -62,3 +63,14 @@ def expand_list_strings(items):
         for sub_item in sub_items:
             all_items.append(sub_item)
     return all_items
+
+
+# Accesses an object at given keys (all keys except last), creates key if does not exist
+def get_recursive_current_object(data, keys: List[str]):
+    if len(keys) < 2:
+        return data
+    for key in keys[:-1]:
+        if not key in data:
+            data[key] = {}
+        data = data[key]
+    return data
