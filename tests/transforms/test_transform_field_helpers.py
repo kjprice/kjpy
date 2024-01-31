@@ -50,6 +50,12 @@ class TestSetObjFromKey(unittest.TestCase):
 
 
 class TestMongoFieldHelpers(unittest.TestCase):
+    def test_ensure_list(self):
+        self.assertEqual(ensure_list(1), [1])
+        self.assertEqual(ensure_list([1]), [1])
+        self.assertEqual(ensure_list([]), [])
+        self.assertEqual(ensure_list({}), [{}])
+
     def test_to_date(self):
         date_string = "Nov 30, 2010"
         expected_result = datetime(2010, 11, 30, 0, 0)

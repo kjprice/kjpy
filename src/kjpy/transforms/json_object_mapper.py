@@ -1,11 +1,6 @@
 from typing import Callable, List, Optional, Union
 from enum import Enum
-
-
-def _ensure_list(items) -> List[str]:
-    if type(items) == list:
-        return items
-    return [items]
+from src.kjpy.transforms.transform_field_helpers import ensure_list
 
 
 def _split_keys(item: str) -> List[str]:
@@ -26,7 +21,7 @@ class JsonObjectMapper:
         clean_fn: Optional[Callable] = None,
         custom_handler: Optional[CustomHandler] = None,
     ):
-        self.return_fields: List[str] = _ensure_list(return_field_names)
+        self.return_fields: List[str] = ensure_list(return_field_names)
         self.return_fields_keys: List[List[str]] = [
             _split_keys(f) for f in self.return_fields
         ]

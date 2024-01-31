@@ -3,6 +3,12 @@ from dateutil import parser
 import re
 
 
+def ensure_list(items) -> List[str]:
+    if type(items) == list:
+        return items
+    return [items]
+
+
 def to_date(value):
     if not value:
         return None
