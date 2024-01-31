@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Generic, Optional, Set, TypeVar
+from typing import Any, Callable, Dict, Generic, Optional, Set, TypeVar, Union
 
 from .transform_field_helpers import (
     ensure_list,
@@ -18,14 +18,22 @@ class TransformedRecord(SerializableBson, MappingAbstract[Any, Any]):
 
 TransformClass = TypeVar("TransformClass", bound=TransformedRecord)
 
+FieldMap = Dict[str, JsonObjectMapper]
+
 
 class RecordHandler(Generic[TransformClass]):
-    def __init__(self, record: Dict, fields_to_ignore: Optional[Set[str]] = []) -> None:
+    def __init__(
+        self,
+        record: Dict,
+        fields_map: FieldMap,
+        fields_to_ignore: Optional[Set[str]] = [],
+    ) -> None:
         self._response = None
         self.record = record
         self._transformed_record = self._create_transformed_record()
         self._customer_handlers = {}
         self.fields_to_ignore = fields_to_ignore
+        self.fields_map = fields_map
 
     @property
     def response(self):
@@ -66,7 +74,9 @@ class RecordHandler(Generic[TransformClass]):
             print(f"Could not translate field {field} with value {value}")
             raise (e)
 
-    def _handle_object(self, data, fields_map, field_keys=""):
+    def _handle_object(self, data, field_keys="", fields_map=None):
+        if fields_map is None:
+            fields_map = self.fields_map
         ignore_fields = self.fields_to_ignore
         field_names = list(data.keys())
         for field in field_names:
@@ -82,8 +92,8 @@ class RecordHandler(Generic[TransformClass]):
                     if type(value) == dict:
                         self._handle_object(
                             data=data[field],
-                            fields_map=field_translation,
                             field_keys=field_keys + field + ".",
+                            fields_map=field_translation,
                         )
                     else:
                         self._handle_field(field_translation, field, value, data)
