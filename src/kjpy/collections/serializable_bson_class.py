@@ -2,7 +2,7 @@ import datetime
 
 from overrides import overrides
 
-from kjpy.collections.serializable_class import Serializable
+from .serializable_class import Serializable
 
 
 class SerializableBson(Serializable):
