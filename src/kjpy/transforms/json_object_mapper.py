@@ -1,6 +1,6 @@
 from typing import Callable, List, Optional, Union
 from enum import Enum
-from src.kjpy.transforms.transform_field_helpers import ensure_list
+from .transform_field_helpers import ensure_list
 
 
 def _split_keys(item: str) -> List[str]:
