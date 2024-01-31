@@ -27,6 +27,29 @@ class TestRecursiveCurrentObject(unittest.TestCase):
         self.assertEqual(self.helper(["Bob", "Tom", "Jerry"], True), {})
 
 
+class TestSetObjFromKey(unittest.TestCase):
+    @property
+    def obj(self):
+        return {"Bob": "Tom", "Sara": ["Jim"]}
+
+    def helper(self, key: str, value):
+        obj = self.obj
+        set_obj_from_key_map(obj, key, value)
+        return obj
+
+    def test_set_obj_from_key_map(self):
+        self.assertEqual(self.helper("tom", "jerry"), {**self.obj, "tom": "jerry"})
+        print(self.helper("Bob", "jerry"))
+        self.assertEqual(self.helper("Bob", "jerry"), {**self.obj, "Bob": "jerry"})
+        self.assertEqual(
+            self.helper("Sara", "jerry"), {**self.obj, "Sara": ["Jim", "jerry"]}
+        )
+        self.assertEqual(
+            self.helper("Sara", ["jerry", "john"]),
+            {**self.obj, "Sara": ["Jim", "jerry", "john"]},
+        )
+
+
 class TestMongoFieldHelpers(unittest.TestCase):
     def test_to_date(self):
         date_string = "Nov 30, 2010"

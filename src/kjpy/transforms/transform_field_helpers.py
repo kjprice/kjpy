@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List, Union
 from dateutil import parser
 import re
 
@@ -74,3 +74,30 @@ def get_recursive_current_object(data, keys: List[str]):
             data[key] = {}
         data = data[key]
     return data
+
+
+def set_obj_from_key_map(data, key: str, value: Union[str, List]) -> None:
+    if not key in data:
+        data[key] = value
+        return
+
+    if type(data[key]) != list:
+        data[key] = value
+    else:
+        if type(value) == str:
+            data[key].append(value)
+        elif type(value) == list:
+            for subvalue in value:
+                if not subvalue in data[key]:
+                    data[key].append(subvalue)
+
+
+def is_object_empty_recursive(data: Dict):
+    for field_name in data:
+        value = data[field_name]
+        if type(value) == dict:
+            if not is_object_empty_recursive(value):
+                return False
+        else:
+            return False
+    return True
