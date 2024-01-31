@@ -28,5 +28,6 @@ src/kjpy/data/misc.py
 src/kjpy/data/unit_test_handler.py
 src/kjpy/decorators/beautiful_soup_decorators.py
 src/kjpy/format/format_time.py
+src/kjpy/transforms/mongo_field.py
+src/kjpy/transforms/transform_field_helpers.py
 tests/test_concurrent.py
-tests/test_mapping_class.py
