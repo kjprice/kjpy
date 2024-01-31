@@ -18,14 +18,12 @@ class TransformedRecord(SerializableBson, MappingAbstract[Any, Any]):
 
 TransformClass = TypeVar("TransformClass", bound=TransformedRecord)
 
-FieldMap = Dict[str, JsonObjectMapper]
-
 
 class RecordHandler(Generic[TransformClass]):
     def __init__(
         self,
         record: Dict,
-        fields_map: FieldMap,
+        fields_map: Dict[str, JsonObjectMapper],
         custom_handlers=None,
         fields_to_ignore: Optional[Set[str]] = [],
     ) -> None:
@@ -44,7 +42,7 @@ class RecordHandler(Generic[TransformClass]):
         return self._response
 
     def _create_transformed_record(self) -> TransformClass:
-        raise Exception("Method must be overwritten")
+        return TransformedRecord()
 
     def _handle_custom_field(self, field_name: str, custom_handler, translated_value):
         self._customer_handlers[custom_handler](field_name, translated_value)
