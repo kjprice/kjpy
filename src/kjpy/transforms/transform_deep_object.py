@@ -26,14 +26,16 @@ class RecordHandler(Generic[TransformClass]):
         self,
         record: Dict,
         fields_map: FieldMap,
+        custom_handlers=None,
         fields_to_ignore: Optional[Set[str]] = [],
     ) -> None:
         self._response = None
         self.record = record
         self._transformed_record = self._create_transformed_record()
-        self._customer_handlers = {}
+        self._customer_handlers = custom_handlers
         self.fields_to_ignore = fields_to_ignore
         self.fields_map = fields_map
+        self._handle_object(self.record)
 
     @property
     def response(self):
@@ -43,9 +45,6 @@ class RecordHandler(Generic[TransformClass]):
 
     def _create_transformed_record(self) -> TransformClass:
         raise Exception("Method must be overwritten")
-
-    def _set_custom_handler(self, handler_name, handler_callback: Callable):
-        self._customer_handlers[handler_name] = handler_callback
 
     def _handle_custom_field(self, field_name: str, custom_handler, translated_value):
         self._customer_handlers[custom_handler](field_name, translated_value)
