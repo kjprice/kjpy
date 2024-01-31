@@ -3,7 +3,7 @@ from dateutil import parser
 import re
 
 
-def ensure_list(items) -> List[str]:
+def ensure_list(items) -> List[any]:
     if type(items) == list:
         return items
     return [items]
