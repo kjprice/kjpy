@@ -76,6 +76,7 @@ class RecordHandler(Generic[TransformClass]):
             fields_map = self.fields_map
         ignore_fields = self.fields_to_ignore
         field_names = list(data.keys())
+
         for field in field_names:
             if field_keys + field in ignore_fields:
                 del data[field]
@@ -88,16 +89,21 @@ class RecordHandler(Generic[TransformClass]):
                     raise Exception(f'Unknown field "{field}" from "{field_keys}"')
                 value = data[field]
                 field_translations = ensure_list(fields_map[field])
+
                 for field_translation in field_translations:
+                    if isinstance(field_translation, JsonObjectMapper):
+                        self._handle_field(field_translation, field, value, data)
                     # TODO: Check if is person
-                    if type(value) == dict:
+                    elif type(value) == dict:
                         self._handle_object(
                             data=data[field],
                             field_keys=field_keys + field + ".",
                             fields_map=field_translation,
                         )
                     else:
-                        self._handle_field(field_translation, field, value, data)
+                        raise Exception(
+                            "Mapping must be a dict or object mapper but found: ", value
+                        )
 
         if not is_object_empty_recursive(data):
             raise Exception("data not empty", data)

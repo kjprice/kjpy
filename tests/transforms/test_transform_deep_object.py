@@ -7,10 +7,16 @@ from src.kjpy.transforms.json_object_mapper import JsonObjectMapper
 original_object = {
     "name": "Bob",
     "other_info": {"phoneNumber": 111, "tags": ["accountant", "balding"]},
+    "career": {"type": "business"},
     "metadata": "Copyright",
 }
 
-expected_output = {"name": "Bob", "phone": 111, "tags": ["accountant", "balding"]}
+expected_output = {
+    "name": "Bob",
+    "phone": 111,
+    "tags": ["accountant", "balding"],
+    "career": {"type": "business"},
+}
 
 fields_map = {
     "name": JsonObjectMapper("name"),
@@ -18,6 +24,7 @@ fields_map = {
         "phoneNumber": JsonObjectMapper("phone"),
         "tags": JsonObjectMapper("tags"),
     },
+    "career": JsonObjectMapper("career"),
 }
 fields_to_ignore = ["metadata"]
 
