@@ -80,6 +80,10 @@ class RecordHandler(Generic[TransformClass]):
             if field_keys + field in ignore_fields:
                 del data[field]
             else:
+                if type(fields_map) != dict:
+                    raise Exception(
+                        f"Please provide full mapping for object, with given field_keys {field_keys}"
+                    )
                 if not field in fields_map:
                     raise Exception(f'Unknown field "{field}" from "{field_keys}"')
                 value = data[field]
