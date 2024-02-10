@@ -21,12 +21,9 @@ class ExactlyOnResultNotFound(MongoException):
         super().__init__(message)
 
 
-_DB_NAME = "scrapeComics"
-
-
-def connect_db():
+def connect_db(db_name):
     client = MongoClient(maxPoolSize=10000)
-    db = client.get_database(_DB_NAME)
+    db = client.get_database(db_name)
     return db
 
 
@@ -42,6 +39,7 @@ class DBListener(multiprocessing.Process):
         message_mongo_results: DictProxy,
         # message_mongo_query_results: DictProxy,
         num_workers: int,
+        db_name: str,
     ) -> None:
         super().__init__()
         self.listener_number = listener_number
@@ -53,13 +51,14 @@ class DBListener(multiprocessing.Process):
         self.message_mongo_results = message_mongo_results
         # self.message_mongo_query_results = message_mongo_query_results
         self.num_workers = num_workers
+        self.db_name = db_name
         self._db = None
 
     def connect_to_db(self):
         time_to_wait = self.num_workers / 10
         # print(f'Waiting {time_to_wait} seconds for other processes to warm up.')
         time.sleep(time_to_wait)
-        self._db = connect_db()
+        self._db = connect_db(self.db_name)
 
         return self._db
 

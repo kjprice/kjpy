@@ -37,6 +37,10 @@ class DefaultWorker(Worker):
 #         handler = Optional[Callable]
 #         mongo_delay = float
 #         job_delay = float
+
+_DB_NAME = "scrapeComics"
+
+
 class Manager:
     # message_list = None
     def __init__(
@@ -58,6 +62,7 @@ class Manager:
         handler: Optional[Callable] = None,
         mongo_delay: float = 0.5,
         job_delay: float = 0.1,
+        db_name: Optional[str] = _DB_NAME,
     ) -> None:
         self.namespace = namespace
         jobs = []
@@ -149,6 +154,7 @@ class Manager:
                 mongo_queue=mongo_queue,
                 message_mongo_results=message_mongo_results,
                 num_workers=num_workers,
+                db_name=db_name,
             )
             jobs.append(db_listener)
             db_listener.start()
