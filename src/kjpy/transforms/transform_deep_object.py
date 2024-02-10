@@ -100,6 +100,9 @@ class RecordHandler(Generic[TransformClass]):
                             field_keys=field_keys + field + ".",
                             fields_map=field_translation,
                         )
+                    # TODO: Optionally require fields, right now we are ignoring empty fields
+                    elif value is None:
+                        del data[field]
                     else:
                         raise Exception(
                             "Mapping must be a dict or object mapper but found: ", value
